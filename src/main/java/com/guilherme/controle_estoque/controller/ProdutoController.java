@@ -2,6 +2,7 @@ package com.guilherme.controle_estoque.controller;
 import com.guilherme.controle_estoque.dto.VendaRequest;
 import com.guilherme.controle_estoque.model.ProdutoModel;
 import com.guilherme.controle_estoque.service.ProdutoService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +20,11 @@ public class ProdutoController {
     @PostMapping
     public ResponseEntity<ProdutoModel> criarProduto(@RequestBody ProdutoModel produto) {
         ProdutoModel novoProduto = service.salvar(produto);
-        return ResponseEntity.ok(novoProduto);
+        return ResponseEntity.status(201).body(novoProduto);
     }
 
     @PostMapping("/{id}/vender")
-    public ResponseEntity<ProdutoModel> venderProduto(@PathVariable Long id, @RequestBody VendaRequest request) {
+    public ResponseEntity<ProdutoModel> venderProduto(@PathVariable Long id, @RequestBody @Valid VendaRequest request) {
         ProdutoModel produto = service.vender(id,request.quantidade());
         return ResponseEntity.ok(produto);
     }
@@ -52,7 +53,7 @@ public class ProdutoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletarProduto(@PathVariable Long id) {
         service.deletar(id);
-        return ResponseEntity.ok("Produto excluído com sucesso");
+        return ResponseEntity.noContent().build();
     }
 
 

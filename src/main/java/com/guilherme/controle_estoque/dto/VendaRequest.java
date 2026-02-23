@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 public record VendaRequest(
 
     @NotNull
-    @Min(1)
+    @Min(value = 1, message = "Quantidade deve ser maior que zero")
     Integer quantidade)
 {
 }
