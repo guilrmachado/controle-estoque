@@ -1,4 +1,5 @@
 package com.guilherme.controle_estoque.controller;
+import com.guilherme.controle_estoque.dto.ProdutoRequest;
 import com.guilherme.controle_estoque.dto.VendaRequest;
 import com.guilherme.controle_estoque.model.ProdutoModel;
 import com.guilherme.controle_estoque.service.ProdutoService;
@@ -18,8 +19,8 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<ProdutoModel> criarProduto(@RequestBody ProdutoModel produto) {
-        ProdutoModel novoProduto = service.salvar(produto);
+    public ResponseEntity<ProdutoModel> criarProduto(@RequestBody ProdutoRequest request) {
+        ProdutoModel novoProduto = service.salvar(request);
         return ResponseEntity.status(201).body(novoProduto);
     }
 
@@ -44,9 +45,8 @@ public class ProdutoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> atualizarProduto(@PathVariable Long id, @RequestBody ProdutoModel produto) {
-
-        ProdutoModel produtoExistente = service.atualizar(id,produto);
+    public ResponseEntity<Object> atualizarProduto(@PathVariable Long id, @RequestBody ProdutoRequest request) {
+        ProdutoModel produtoExistente = service.atualizar(id,request);
         return ResponseEntity.ok(produtoExistente);
     }
 

@@ -1,10 +1,13 @@
 package com.guilherme.controle_estoque.service;
 
 
+import com.guilherme.controle_estoque.dto.ProdutoRequest;
 import com.guilherme.controle_estoque.dto.VendaRequest;
 import com.guilherme.controle_estoque.exception.EstoqueInsuficienteException;
 import com.guilherme.controle_estoque.exception.ProdutoNaoEncontradoException;
+import com.guilherme.controle_estoque.model.CategoriaModel;
 import com.guilherme.controle_estoque.model.ProdutoModel;
+import com.guilherme.controle_estoque.repository.CategoriaRepository;
 import com.guilherme.controle_estoque.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,21 +18,30 @@ import java.util.List;
 public class ProdutoService {
 
   private final ProdutoRepository repository;
-  public ProdutoService(ProdutoRepository repository){
+  private final CategoriaRepository categoriaRepository;
+  public ProdutoService(ProdutoRepository repository, CategoriaRepository categoriaRepository){
       this.repository = repository;
+      this.categoriaRepository = categoriaRepository;
   }
 
-  public ProdutoModel salvar(ProdutoModel produto){
-      if (produto.getPreco().compareTo(BigDecimal.ZERO) <= 0){
+  public ProdutoModel salvar(ProdutoRequest request){
+      CategoriaModel categoria = categoriaRepository.findById(request.categoriaId())
+              .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+      if (request.preco().compareTo(BigDecimal.ZERO) <= 0){
         throw new IllegalArgumentException("Preço deve ser maior do que zero.");
       }
-      if (produto.getQuantidadeEmEstoque() < 0){
+      if (request.quantidadeEmEstoque() < 0){
           throw new IllegalArgumentException("Quantidade deve ser maior do que zero");
       }
-      if (produto.getNome() == null){
+      if (request.nome() == null){
           throw new IllegalArgumentException("Nome não pode ser nulo");
       }
-      produto.setAtivo(true);
+      ProdutoModel produto = new ProdutoModel();
+      produto.setNome(request.nome());
+      produto.setPreco(request.preco());
+      produto.setQuantidadeEmEstoque(request.quantidadeEmEstoque());
+      produto.setCategoria(categoria);
+      produto.setAtivo(request.quantidadeEmEstoque() > 0);
       return repository.save(produto);
   }
 
@@ -42,15 +54,17 @@ public class ProdutoService {
               .orElseThrow(() -> new ProdutoNaoEncontradoException("Produto não encontrado"));
   }
 
-  public ProdutoModel atualizar(Long id,ProdutoModel produtoAtualizado){
+  public ProdutoModel atualizar(Long id,ProdutoRequest request){
       ProdutoModel produtoExistente = buscarPorId(id);
-      if (produtoAtualizado.getQuantidadeEmEstoque() < 0){
+      CategoriaModel categoria = categoriaRepository.findById(request.categoriaId())
+              .orElseThrow(() -> new RuntimeException("Categoria não encontrada."));
+      if (request.quantidadeEmEstoque() < 0){
           throw new IllegalArgumentException("Não pode atualizar estoque para valor negativo.");
       }
-      produtoExistente.setNome(produtoAtualizado.getNome());
-      produtoExistente.setCategoria(produtoAtualizado.getCategoria());
-      produtoExistente.setPreco(produtoAtualizado.getPreco());
-      produtoExistente.setQuantidadeEmEstoque(produtoAtualizado.getQuantidadeEmEstoque());
+      produtoExistente.setNome(request.nome());
+      produtoExistente.setCategoria(categoria);
+      produtoExistente.setPreco(request.preco());
+      produtoExistente.setQuantidadeEmEstoque(request.quantidadeEmEstoque());
       produtoExistente.setAtivo(produtoExistente.getQuantidadeEmEstoque() > 0);
       return repository.save(produtoExistente);
   }

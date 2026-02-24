@@ -1,7 +1,7 @@
 package com.guilherme.controle_estoque.model;
 
 import jakarta.persistence.*;
-
+import com.guilherme.controle_estoque.model.CategoriaModel;
 import java.math.BigDecimal;
 
 @Entity
@@ -14,7 +14,7 @@ public class ProdutoModel {
     private String nome;
     @ManyToOne
     @JoinColumn(name = "categoria_id",nullable = false)
-    private Categoria categoria;
+    private CategoriaModel categoria;
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal preco;
     @Column(nullable = false)
@@ -26,7 +26,7 @@ public class ProdutoModel {
     public ProdutoModel() {
     }
 
-    public ProdutoModel(Long id, String nome, Categoria categoria, BigDecimal preco, Integer quantidadeEmEstoque, Boolean ativo) {
+    public ProdutoModel(Long id, String nome, CategoriaModel categoria, BigDecimal preco, Integer quantidadeEmEstoque, Boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.categoria = categoria;
@@ -51,11 +51,11 @@ public class ProdutoModel {
         this.nome = nome;
     }
 
-    public Categoria getCategoria() {
+    public CategoriaModel getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(CategoriaModel categoria) {
         this.categoria = categoria;
     }
 
