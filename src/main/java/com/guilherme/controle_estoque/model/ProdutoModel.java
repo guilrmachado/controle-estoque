@@ -20,7 +20,7 @@ public class ProdutoModel {
     @Column(nullable = false)
     private Integer quantidadeEmEstoque;
     @Column(nullable = false)
-    private Boolean ativo;
+    private boolean ativo;
 
 
     public ProdutoModel() {

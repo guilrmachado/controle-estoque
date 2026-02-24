@@ -25,7 +25,7 @@ public class ProdutoController {
 
     @PostMapping("/{id}/vender")
     public ResponseEntity<ProdutoModel> venderProduto(@PathVariable Long id, @RequestBody @Valid VendaRequest request) {
-        ProdutoModel produto = service.vender(id,request.quantidade());
+        ProdutoModel produto = service.vender(id,request);
         return ResponseEntity.ok(produto);
     }
 
@@ -55,6 +55,4 @@ public class ProdutoController {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }
-
-
 }
