@@ -73,6 +73,18 @@ O projeto utiliza SQL Server rodando em container.
 
 ##  Configuração do Banco
 
+Com Docker Desktop em execução, rode na raiz do projeto:
+
+docker compose up -d
+
+O SQL Server ficará disponível em: localhost,1434
+
+Crie o banco(apenas na primeira vez):
+
+CREATE DATABASE controle_estoque;
+
+##  Configuração da Aplicação
+
 1. Copie application-example.properties
  
 2. Renomeie para application.properties
@@ -81,13 +93,6 @@ O projeto utiliza SQL Server rodando em container.
 
 O arquivo application.properties está no .gitignore.
 
-
-
-Com Docker Desktop em execução, rode na raiz do projeto:
-
-docker compose up -d
-
-O SQL Server ficará disponível em: localhost,1434
 
 
 ##  Execução
