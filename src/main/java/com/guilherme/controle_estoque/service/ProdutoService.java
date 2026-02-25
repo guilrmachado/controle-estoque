@@ -27,6 +27,9 @@ public class ProdutoService {
   public ProdutoModel salvar(ProdutoRequest request){
       CategoriaModel categoria = categoriaRepository.findById(request.categoriaId())
               .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+      if (!categoria.getAtivo()){
+          throw new RuntimeException("Não é possível criar produto em categoria inativa.");
+      }
       if (request.preco().compareTo(BigDecimal.ZERO) <= 0){
         throw new IllegalArgumentException("Preço deve ser maior do que zero.");
       }
@@ -58,6 +61,9 @@ public class ProdutoService {
       ProdutoModel produtoExistente = buscarPorId(id);
       CategoriaModel categoria = categoriaRepository.findById(request.categoriaId())
               .orElseThrow(() -> new RuntimeException("Categoria não encontrada."));
+      if (!categoria.getAtivo()){
+          throw new RuntimeException("Não é possível atualizar produto com categoria inativa.");
+      }
       if (request.quantidadeEmEstoque() < 0){
           throw new IllegalArgumentException("Não pode atualizar estoque para valor negativo.");
       }
