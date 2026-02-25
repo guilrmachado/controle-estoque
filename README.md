@@ -38,15 +38,22 @@ Simular um sistema de controle de estoque com:
 ##  Arquitetura
 
 O projeto segue arquitetura em camadas:
+
 controller → service → repository → database
 
 ###  Estrutura
 src/main/java/com/guilherme/controle_estoque
+
 ├── controller
+
 ├── service
+
 ├── repository
+
 ├── model
+
 ├── dto
+
 └── resources
 
 ### Responsabilidades
@@ -66,33 +73,29 @@ O projeto utiliza SQL Server rodando em container.
 
 ##  Configuração do Banco
 
-###  Opção 1 - Banco local
 1. Copie application-example.properties
+ 
 2. Renomeie para application.properties
-3. Configure usuário, senha e nome do banco
-4. Crie o banco de dados com o nome "controle_estoque"
+ 
+2. Configure usuário e senha
 
 O arquivo application.properties está no .gitignore.
 
-### Opção 2 - Usando Docker
 
-Com Docker em execução, rode na raiz do projeto:
+
+Com Docker Desktop em execução, rode na raiz do projeto:
 
 docker compose up -d
 
-e
-
-docker exec -it sqlserver_controle_estoque /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "Senha123!" -Q "CREATE DATABASE controle_estoque" -C
-
-para criação automática do banco de dados "controle_estoque"
-
-O SQL Server será iniciado na porta 1433.
-
+O SQL Server ficará disponível em: localhost,1434
 
 
 ##  Execução
-1. Configurar o banco (local ou Docker)
+
+1. Subir o banco (Docker)
+ 
 2. Executar a aplicação Spring Boot
+  
 3. Testar endpoints via Postman
 
 
@@ -100,79 +103,103 @@ O SQL Server será iniciado na porta 1433.
 
 ### Categorias
 
-#### Listar categorias
+#### - Listar categorias
 
 GET /categorias
 
-#### Criar categoria
+#### - Criar categoria
 
 POST /categorias
 
 Body:
+
 {
+
   "nome": "Eletrônicos"
+  
 }
 
-#### Deletar categoria
+#### - Deletar categoria
 
 DELETE /categorias/{id}
 
 ### Produtos
 
-#### Criar produto
+#### - Criar produto
 
 POST /produtos
 
 Body:
+
 {
+
   "nome": "Notebook",
+  
   "preco": 3500,
+  
   "quantidade": 10,
+  
   "categoriaId": 1
+  
 }
 
-#### Listar produtos
+#### - Listar produtos
 
 GET /produtos
 
-#### Buscar produto por ID
+#### - Buscar produto por ID
 
 GET /produtos/{id}
 
-#### Atualizar produto
+#### - Atualizar produto
 
 PUT /produtos/{id}
 
-#### Deletar produto
+#### - Deletar produto
 
 DELETE /produtos/{id}
 
-#### Realizar venda (baixa no estoque)
+#### - Realizar venda (baixa no estoque)
 
 POST /produtos/{id}/vender
+
 Body:
+
 {
+
   "quantidade": 2
+  
 }
 
 A venda reduz automaticamente a quantidade disponível no estoque.
 
 
 ## Persistência
+
  • O volume estoque_data garante que os dados não sejam apagados ao reiniciar o container.
+ 
  • Evitar utilizar docker compose down -v, pois isso remove o volume.
 
 
 
 ## Conceitos Aplicados
+
  • REST API
+ 
  • DTO Pattern
+ 
  • Injeção de dependência
+ 
  • JPA / Hibernate
+ 
  • Relacionamento entre entidades
+ 
  • Validação com Jakarta Validation
+ 
  • Persistência relacional
+ 
  • Isolamento de banco com Docker
+ 
  • Volume para persistência de dados
 
 
@@ -180,5 +207,7 @@ A venda reduz automaticamente a quantidade disponível no estoque.
 ## Autor
 
 Guilherme Machado
+
 Estudante de Ciência da Computação – UERJ
+
 Foco em Backend Java
