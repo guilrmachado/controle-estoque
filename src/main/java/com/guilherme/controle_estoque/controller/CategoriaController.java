@@ -1,12 +1,8 @@
 package com.guilherme.controle_estoque.controller;
 
 import com.guilherme.controle_estoque.dto.CategoriaRequest;
-import com.guilherme.controle_estoque.dto.ProdutoRequest;
 import com.guilherme.controle_estoque.model.CategoriaModel;
-import com.guilherme.controle_estoque.model.ProdutoModel;
-import com.guilherme.controle_estoque.repository.CategoriaRepository;
 import com.guilherme.controle_estoque.service.CategoriaService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

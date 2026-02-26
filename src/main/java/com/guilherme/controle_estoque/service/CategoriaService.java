@@ -2,11 +2,8 @@ package com.guilherme.controle_estoque.service;
 
 
 import com.guilherme.controle_estoque.dto.CategoriaRequest;
-import com.guilherme.controle_estoque.exception.ProdutoNaoEncontradoException;
 import com.guilherme.controle_estoque.model.CategoriaModel;
-import com.guilherme.controle_estoque.model.ProdutoModel;
 import com.guilherme.controle_estoque.repository.CategoriaRepository;
-import com.guilherme.controle_estoque.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
