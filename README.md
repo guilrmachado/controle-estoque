@@ -141,14 +141,14 @@ Body:
 
 {
 
-  "nome": "Notebook",
-  
-  "preco": 3500,
-  
-  "quantidade": 10,
-  
-  "categoriaId": 1
-  
+"nome": "Notebook",
+
+"categoriaId": 1,
+
+"preco": 2500,
+
+"quantidadeEmEstoque": 10
+
 }
 
 #### - Listar produtos
