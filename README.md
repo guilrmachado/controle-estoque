@@ -17,6 +17,8 @@ Projeto criado com foco em aprendizado backend e portfólio, aplicando boas prá
 - Docker Compose
 - Maven
 - Jakarta Validation
+- JUnit 5
+- Mockito
 
 
 
@@ -32,6 +34,7 @@ Simular um sistema de controle de estoque com:
 - Remoção de produtos
 - Persistência em banco relacional
 - Ambiente isolado via container Docker
+- Testes unitários na camada de serviço
 
 
 
@@ -59,7 +62,7 @@ src/main/java/com/guilherme/controle_estoque
 ### Responsabilidades
 
 - Controller → Recebe requisições HTTP
-- Service → Regras de negócio
+- Service → Regras de negócio e validações
 - Repository → Comunicação com o banco via JPA
 - Model → Entidades mapeadas
 - DTO → Objetos de entrada da API
@@ -71,7 +74,7 @@ src/main/java/com/guilherme/controle_estoque
 O projeto utiliza SQL Server rodando em container.
 
 
-##  Configuração do Banco
+##  Subir o banco
 
 Com Docker Desktop em execução, rode na raiz do projeto:
 
@@ -79,7 +82,7 @@ docker compose up -d
 
 O SQL Server ficará disponível em: localhost,1434
 
-Crie o banco(apenas na primeira vez):
+Crie o banco(apenas na primeira execução):
 
 CREATE DATABASE controle_estoque;
 
@@ -178,6 +181,18 @@ Body:
 
 A venda reduz automaticamente a quantidade disponível no estoque.
 
+## Retorno de Status HTTP
+
+A API segue boas práticas REST utilizando códigos de status apropriados:
+
+ - 200 OK → Operação realizada com sucesso
+ - 201 Created → Recurso criado com sucesso
+ - 204 No Content → Recurso removido com sucesso
+ - 400 Bad Request → Dados inválidos
+ - 404 Not Found → Produto ou categoria não encontrados
+ - 409 Conflict → Estoque insuficiente
+ - 500 Internal Server Error → Erro inesperado
+
 
 ## Persistência
 
@@ -190,8 +205,10 @@ A venda reduz automaticamente a quantidade disponível no estoque.
 ## Conceitos Aplicados
 
  • REST API
+
+ • Arquitetura em camadas
  
- • DTO Pattern
+ • DTO Pattern (utilizando record)
  
  • Injeção de dependência
  
@@ -201,13 +218,15 @@ A venda reduz automaticamente a quantidade disponível no estoque.
  
  • Validação com Jakarta Validation
  
- • Persistência relacional
+ • Tratamento de exceções
  
  • Isolamento de banco com Docker
  
  • Volume para persistência de dados
 
+ • Retorno adequado de status HTTP
 
+ • Testes unitários na camada de serviço (JUnit + Mockito)
 
 ## Autor
 
