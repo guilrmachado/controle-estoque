@@ -4,6 +4,9 @@ Sistema de Controle de Estoque desenvolvido com Java + Spring Boot + SQL Server 
 
 Projeto criado com foco em aprendizado backend e portfólio, aplicando boas práticas de arquitetura em camadas, persistência com JPA e isolamento de banco de dados com Docker.
 
+## 🖥️ Front-end
+Interface desenvolvida em HTML, CSS e JavaScript.  
+[github.com/guilrmachado/controle-estoque-frontend](https://github.com/guilrmachado/controle-estoque-frontend)
 
 
 ##  Tecnologias Utilizadas
