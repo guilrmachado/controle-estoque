@@ -237,4 +237,4 @@ Guilherme Machado
 
 Estudante de Ciência da Computação – UERJ
 
-Foco em Backend Java
+Foco em desenvolvimento Fullstack (Java + JavaScript)
